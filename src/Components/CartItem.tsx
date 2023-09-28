@@ -15,7 +15,13 @@ const CartItem : React.FC<CartItemProps> = ({ id, title, type, price, size, coun
   const dispath = useDispatch();
 
   const onClickPlus = () => {
-    dispath(addPizza({ id }));
+    dispath(addPizza({id,
+      title,
+      price,
+      imageUrl,
+      type,
+      size,
+      count}));
   };
   const onClickMinus = () => {
     dispath(minusPizza(id));

@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addPizza, selectCart } from "../../redux/Slicies/cartSlice";
+import { addPizza, CartItem, selectCartItemId} from "../../redux/Slicies/cartSlice";
+
 
 type PizzaBlockProps = {
   id:string;
@@ -12,10 +13,10 @@ type PizzaBlockProps = {
   types:number[];
 }
 
+
+
 const PizzaBlock:React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
-  const pizzasItems = useSelector(selectCart).items.find(
-    (obj) => obj.id === id
-  );
+  const pizzasItems = useSelector(selectCartItemId(id));
   const dispath = useDispatch();
 
   const addedCount = pizzasItems ? pizzasItems.count : 0;
@@ -27,13 +28,14 @@ const PizzaBlock:React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, size
   let [activeSize, setActiveSize] = React.useState(0);
 
   const onClickAddButton = () => {
-    const item = {
+    const item: CartItem = {
       id,
       title,
       price,
       imageUrl,
       type: typesOfPizza[activeType],
       size: sizes[activeSize],
+      count:0
     };
     dispath(addPizza(item));
     // setPizzaCount(pizzaCount + 1);

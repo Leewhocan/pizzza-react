@@ -3,17 +3,18 @@ import {
   selectFilter,
   setCategoryId,
   setPageCount,
-} from "../redux/Slicies/filterSlice.js";
+} from "../redux/Slicies/filterSlice";
 import { fetchPizzas } from "../redux/Slicies/pizzasSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Categories from "../Components/Categories";
 import Pagination from "../Components/Pagination";
 import PizzaBlock from "../Components/PizzaBlok/PizzaBlock";
 import Skeleton from "../Components/PizzaBlok/Skeleton";
 import Sort from "../Components/Sort";
 import { PizzaData } from "../redux/Slicies/pizzasSlice";
+import { useAppDispatch } from "../redux/store";
 const Home: React.FC = () => {
-  const dispath = useDispatch();
+  const dispath = useAppDispatch();
 
   const {
     categoryId,
@@ -45,13 +46,13 @@ const Home: React.FC = () => {
 
     try {
       dispath(
-        //@ts-ignore
+        
         fetchPizzas({
           sortBy,
           order,
           category,
           search,
-          currentPage,
+          currentPage : String(currentPage),
         })
       );
     } catch (error) {
